@@ -1,0 +1,56 @@
+Dataset:
+    Annotation: ../data/eth/eth-filtered.trajectories
+    ROI: ../data/eth/ROI.txt
+    DownSample: 2
+
+Debug:
+    LogFile: ../debug/log.txt
+
+EntryPointGAN:
+    Checkpoint: ../../trained_models/entry-point-gan.pt
+    HiddenSizeG:
+    - 128
+    - 64
+    - 32
+    HiddenSizeD:
+    - 128
+    - 64
+    - 32
+    ReluSlope: 0.1
+    NoiseDim: 4
+
+    UnrolleingSteps: 10
+    nEpochs: 10000
+    LearningRateG: 0.0001
+    LearningRateD: 0.0001
+    beta1: 0.9
+    beta2: 0.999
+
+
+PredictorGAN:
+    Checkpoint: ../trained_models/predictor-gan.pt
+    EmbeddingSize:
+    - 8
+    - 16
+    LstmSizeG: 62
+    LstmSizeD: 62
+    HiddenSizeG:
+    - 64
+    - 32
+    HiddenSizeD:
+    - 64
+    - 32
+    ReluSlope: 0.1
+    NoiseDim: 4
+    UnrolleingSteps: 10
+    nEpochs: 50000
+    BatchSize: 128
+    LearningRateG: 0.001
+    LearningRateD: 0.001
+    beta1: 0.9
+    beta2: 0.999
+    UseL2Loss: True
+
+Generation:
+    MaxWayPoints: 40
+    MaxObservationLength: 4
