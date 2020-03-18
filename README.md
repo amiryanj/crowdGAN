@@ -17,21 +17,35 @@ On the left side of the figure below, you see the Trajectory Generator and on th
 
 However for implementation we use two separate GANs:
 1. **Entry-Point GAN**: which is responsible just for generating the first two points of a trajectory
-2. **PredictorGAN**: which takes the beginning of a trajectory and predicts the rest of it step-by-step.
+2. **Predictor GAN**: which takes the beginning of a trajectory and predicts the rest of it step-by-step.
 
 ## Results
 We tested our system on [ETH walking pedestrians dataset](https://vision.ee.ethz.ch/en/datasets/):
+### 1) Generating Entry points:
 
 <p align='center'>
-  <img src='figs/fake.gif' width='400px'\>
+  <img src='figs/entrypoints-gmm.jpg' width='240px'\>
+  <img src='figs/entrypoints-vgan.jpg' width='240px'\>
+  <img src='figs/entrypoints-ugan.jpg' width='240px'\>
+</p>
+<p align='center'>
+  <img src='figs/entrypoints-legend.jpg' width='600px'\>
+</p>
+
+### 2) Generating Trajectories
+<p align='center'>  
   <img src='figs/real.gif' width='400px'\>
+  <img src='figs/fake.gif' width='400px'\>
 </p>
 
 ## Training
-For training of the system, you need to run entrypointGAN.py and predictorGAN.py separately.
+In order to training the system, you need to train ```Entry-Point GAN``` and ```Predictor GAN``` separately:
+```
+$ python entrypointGAN.py
+$ python predictorGAN.py
+```
 
-### Hyper-parameters  
-All the hyper-parameters are stored in [config.yaml](./config/config.yaml)
+* **Hyper-parameters:** All the hyper-parameters are stored in [```config.yaml```](./config/config.yaml)
  
 
 ## Reference
