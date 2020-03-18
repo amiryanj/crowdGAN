@@ -19,13 +19,19 @@ However for implementation we use two separate GANs:
 1. **Entry-Point GAN**: which is responsible just for generating the first two points of a trajectory
 2. **PredictorGAN**: which takes the beginning of a trajectory and predicts the rest of it step-by-step.
 
+## Results
+We tested our system on [ETH walking pedestrians dataset](https://vision.ee.ethz.ch/en/datasets/):
+
+<p align='center'>
+  <img src='figs/fake.gif' width='400px'\>
+  <img src='figs/real.gif' width='400px'\>
+</p>
 
 ## Training
 For training of the system, you need to run entrypointGAN.py and predictorGAN.py separately.
 
 ### Hyper-parameters  
-All the hyper-parameters are stored in [config](./config/config.yaml)
-
+All the hyper-parameters are stored in [config.yaml](./config/config.yaml)
  
 
 ## Reference
