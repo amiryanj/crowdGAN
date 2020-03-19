@@ -19,9 +19,29 @@ However for implementation we use two separate GANs:
 1. **Entry-Point GAN**: which is responsible just for generating the first two points of a trajectory
 2. **Predictor GAN**: which takes the beginning of a trajectory and predicts the rest of it step-by-step.
 
+## Code
+### 1) Training
+In order to training the system, you need to train ```Entry-Point GAN``` and ```Predictor GAN``` separately:
+```
+$ cd src
+$ python entrypointGAN.py
+$ python predictorGAN.py
+```
+* **Hyper-parameters:** All the hyper-parameters are stored in [```config.yaml```](./config/config.yaml)
+ 
+### 2) Trajectory Generation
+After training, to generate the trajectories you need to run the following command:
+```
+$ python simulation.py
+```
+
 ## Results
 We tested our system on [ETH walking pedestrians dataset](https://vision.ee.ethz.ch/en/datasets/):
+
 ### 1) Generating Entry points:
+* Left: Using Gaussian Mixture Model
+* Middle: Using Vanilla-GAN
+* Right: Using Unrolled-GAN (our implementation)
 
 <p align='center'>
   <img src='figs/entrypoints-gmm.jpg' width='240px'\>
@@ -33,20 +53,13 @@ We tested our system on [ETH walking pedestrians dataset](https://vision.ee.ethz
 </p>
 
 ### 2) Generating Trajectories
+* Left: Real Agents
+* Right: Fake (Generated) Agents
+
 <p align='center'>  
   <img src='figs/real.gif' width='400px'\>
   <img src='figs/fake.gif' width='400px'\>
 </p>
-
-## Training
-In order to training the system, you need to train ```Entry-Point GAN``` and ```Predictor GAN``` separately:
-```
-$ python entrypointGAN.py
-$ python predictorGAN.py
-```
-
-* **Hyper-parameters:** All the hyper-parameters are stored in [```config.yaml```](./config/config.yaml)
- 
 
 ## Reference
 If you use this code for your research, please cite our paper:
