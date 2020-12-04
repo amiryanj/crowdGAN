@@ -44,15 +44,15 @@ We tested our system on [ETH walking pedestrians dataset](https://vision.ee.ethz
   <img src='figs/fake.gif' width='320px'\>  
 </p>
 
-## Code
+## GAN Code
 ### 1) Training
-In order to training the system, you need to train ```Entry-Point GAN``` and ```Predictor GAN``` separately:
+In order to training the system, you need to train `Entry-Point GAN` and `Predictor GAN` separately:
 ```bash
 $ cd src
 $ python entrypointGAN.py
 $ python predictorGAN.py
 ```
-* **Hyper-parameters:** All the hyper-parameters are stored in [```config.yaml```](./config/config.yaml)
+* **Hyper-parameters:** All the hyper-parameters are stored in [`config.yaml`](./config/config.yaml)
  
 ### 2) Trajectory Generation
 After training, to generate the trajectories you need to run the following command:
@@ -88,7 +88,7 @@ By the way, WASP means "Wouter's Agent-based Simulation Platform", and I chose t
 
 This is comparable the BIWI format, but with a few adjustments/simplifications.
 
-A ".trajectories" file starts with three special lines:
+A `.trajectories` file starts with three special lines:
 
 - `MATRIX 1 0 0 0 0 1 0 1 0` = A 3x3 transformation matrix (written row by row) to apply to all coordinates in the file.
   In our example files, you may assume that the matrix always looks like the one above, 
