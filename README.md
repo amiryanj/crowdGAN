@@ -68,18 +68,20 @@ With the correct arguments, the program will run a simulation and write the outp
 The filename contains a timestamp so that it won't overwrite an existing result.
 
 The program requires:
-- an ".env" file that describes the obstacles of an environment. 
+- an `.env` file that describes the obstacles of an environment. 
 You don't have to worry about this; I've already prepared such a file for each scene that we care about.
 
-- also a ".trajectories" file that contains the input trajectories of the simulation. 
+- also a `.trajectories` file that contains the input trajectories of the simulation. 
 These should be the trajectories computed by our GAN, combined with the right start times provided by a simple scheduler.
 
-The `XXX-filtered.trajectories` files contain the original datasets, filtered to match a certain region of interest.
-The "XXX-simulation.trajectories" files contain the simulation output using "XXX.env" and "XXX-filtered.trajectories" input. That is, they are the results of the command:
+   - The `XXX-filtered.trajectories` files contain the original datasets, filtered to match a certain region of interest.
+   - The `XXX-simulation.trajectories` files contain the simulation output using `XXX.env` and `XXX-filtered.trajectories` input. That is, they are the results of the command:
 ```
 $ WASP-ConsoleApplication "XXX.env" "XXX-filtered.trajectories" 1000 4
 ```
-where XXX is of course replaced by a dataset name. By the way, WASP means "Wouter's Agent-based Simulation Platform", and I chose this name because the orange disks in my GUI demo remind me of flying insects ;)
+where XXX is of course replaced by a dataset name.
+
+By the way, WASP means "Wouter's Agent-based Simulation Platform", and I chose this name because the orange disks in my GUI demo remind me of flying insects ;)
 
 ## How to interpret a ".trajectories" file
 
@@ -106,7 +108,7 @@ frameNr agentID x y z
 - For the y-coordinate, you can most likely just print a 0 every time (if you use the same matrix given above).
 - You may add more data to a line (e.g. velocities such as in the BIWI format), but it will be ignored by WASP.
 
-Watch out: The points on a trajectory should be given in chronological order, otherwise the program won't work. 
+**Watch out:** The points on a trajectory should be given in chronological order, otherwise the program won't work. 
 However, it doesn't matter how much time there is between samples; this interval can even change during the trajectory. 
 Also, it doesn't matter if you order the lines per frame or per agent, 
 although I expect that an ordering per agent is easiest to make (simply write the full trajectories one by one).
@@ -117,7 +119,7 @@ On Windows, execute the program TrajectoryFileConverter.exe via the command line
 If you run it without arguments, a help text will appear that hopefully speaks for itself.
 With the correct arguments, the program will read a ".trajectories" file and convert it to separate ".csv" files (one for each agent) to use in the ChAOS visualization program.
 
-Watch out: The output folder should already exist, because the program does not have the right to create this folder on its own.
+**Watch out:** The output folder should already exist, because the program does not have the right to create this folder on its own.
 
 ## Reference
 If you use this code for your research, please cite our paper:
