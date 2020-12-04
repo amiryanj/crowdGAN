@@ -72,3 +72,67 @@ If you use this code for your research, please cite our paper:
   year={2019}
 }
 ```
+
+## How to use the WASP program
+
+On Windows, execute the program WASP-ConsoleApplication.exe via the command line.
+If you run it without arguments, a help text will appear that hopefully speaks for itself.
+With the correct arguments, the program will run a simulation and write the output to a new ".trajectories" file.
+The filename contains a timestamp so that it won't overwrite an existing result.
+
+The program requires an ".env" file that describes the obstacles of an environment. 
+You don't have to worry about this; I've already prepared such a file for each scene that we care about.
+
+The program also requires a ".trajectories" file that contains the input trajectories of the simulation. 
+These should be the trajectories computed by our GAN, combined with the right start times provided by a simple scheduler.
+
+The "XXX-filtered.trajectories" files contain the original datasets, filtered to match a certain region of interest.
+The "XXX-simulation.trajectories" files contain the simulation output using "XXX.env" and "XXX-filtered.trajectories" input. That is, they are the results of the command:
+
+WASP-ConsoleApplication "XXX.env" "XXX-filtered.trajectories" 1000 4
+
+where XXX is of course replaced by a dataset name.
+
+By the way, WASP means "Wouter's Agent-based Simulation Platform", and I chose this name because the orange disks in my GUI demo remind me of flying insects ;)
+
+## How to interpret a ".trajectories" file
+
+This is comparable the BIWI format, but with a few adjustments/simplifications.
+
+A ".trajectories" file starts with three special lines:
+
+MATRIX 1 0 0 0 0 1 0 1 0
+= A 3x3 transformation matrix (written row by row) to apply to all coordinates in the file.
+  In our example files, you may assume that the matrix always looks like the one above, 
+  so there will be coordinates in the format "x 0 z" which denote a 2D point (x,z).
+FPS 10
+= The number of frames per second in the simulation. 
+  In our example files, this will always be 10. Use this to translate a frame number to a timestamp.
+ROI 0 -12 10 0
+= An axis-aligned bounding box (xmin ymin xmax ymax) describing the region of interest.
+  Watch out: the ROI will probably be different for each scenario! Even zara01 and zara02 don't use the same coordinates.
+  In our paper, all generated trajectories should start and end on the boundary of this region, approximately.
+  (For each trajectory, the first and last samples will be either on this boundary or just outside it.)
+
+After this header, the file contains many rows in the following format:
+
+frameNr agentID x y z
+
+To convert a frameNr to a concrete timestamp (in seconds), divide it by the FPS value.
+Agent IDs should be unique and non-negative.
+For the y-coordinate, you can most likely just print a 0 every time (if you use the same matrix given above).
+
+You may add more data to a line (e.g. velocities such as in the BIWI format), but it will be ignored by WASP.
+
+Watch out: The points on a trajectory should be given in chronological order, otherwise the program won't work. 
+However, it doesn't matter how much time there is between samples; this interval can even change during the trajectory. 
+Also, it doesn't matter if you order the lines per frame or per agent, 
+although I expect that an ordering per agent is easiest to make (simply write the full trajectories one by one).
+
+## How to use the TrajectoryFileConverter program
+
+On Windows, execute the program TrajectoryFileConverter.exe via the command line.
+If you run it without arguments, a help text will appear that hopefully speaks for itself.
+With the correct arguments, the program will read a ".trajectories" file and convert it to separate ".csv" files (one for each agent) to use in the ChAOS visualization program.
+
+Watch out: The output folder should already exist, because the program does not have the right to create this folder on its own.
