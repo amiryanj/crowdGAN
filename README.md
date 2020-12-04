@@ -19,22 +19,6 @@ However for implementation we use two separate GANs:
 1. **Entry-Point GAN**: which is responsible just for generating the first two points of a trajectory
 2. **Predictor GAN**: which takes the beginning of a trajectory and predicts the rest of it step-by-step.
 
-## Code
-### 1) Training
-In order to training the system, you need to train ```Entry-Point GAN``` and ```Predictor GAN``` separately:
-```
-$ cd src
-$ python entrypointGAN.py
-$ python predictorGAN.py
-```
-* **Hyper-parameters:** All the hyper-parameters are stored in [```config.yaml```](./config/config.yaml)
- 
-### 2) Trajectory Generation
-After training, to generate the trajectories you need to run the following command:
-```
-$ python simulation.py
-```
-
 ## Results
 We tested our system on [ETH walking pedestrians dataset](https://vision.ee.ethz.ch/en/datasets/):
 
@@ -60,7 +44,24 @@ We tested our system on [ETH walking pedestrians dataset](https://vision.ee.ethz
   <img src='figs/fake.gif' width='320px'\>  
 </p>
 
-## How to use the WASP program
+## Code
+### 1) Training
+In order to training the system, you need to train ```Entry-Point GAN``` and ```Predictor GAN``` separately:
+```bash
+$ cd src
+$ python entrypointGAN.py
+$ python predictorGAN.py
+```
+* **Hyper-parameters:** All the hyper-parameters are stored in [```config.yaml```](./config/config.yaml)
+ 
+### 2) Trajectory Generation
+After training, to generate the trajectories you need to run the following command:
+```bash
+$ python simulation.py
+```
+
+## Notes on Running the Path Follower
+### 1. How to use the WASP program
 
 On Windows, execute the program WASP-ConsoleApplication.exe via the command line.
 If you run it without arguments, a help text will appear that hopefully speaks for itself.
@@ -83,7 +84,7 @@ where XXX is of course replaced by a dataset name.
 
 By the way, WASP means "Wouter's Agent-based Simulation Platform", and I chose this name because the orange disks in my GUI demo remind me of flying insects ;)
 
-## How to interpret a ".trajectories" file
+### 2. How to interpret a ".trajectories" file
 
 This is comparable the BIWI format, but with a few adjustments/simplifications.
 
@@ -99,10 +100,8 @@ A ".trajectories" file starts with three special lines:
   In our paper, all generated trajectories should start and end on the boundary of this region, approximately.
   (For each trajectory, the first and last samples will be either on this boundary or just outside it.)
 
-After this header, the file contains many rows in the following format:
-```
-frameNr agentID x y z
-```
+After this header, the file contains many rows in the following format: `frameNr agentID x y z`
+
 - To convert a frameNr to a concrete timestamp (in seconds), divide it by the FPS value.
 - Agent IDs should be unique and non-negative.
 - For the y-coordinate, you can most likely just print a 0 every time (if you use the same matrix given above).
@@ -113,7 +112,7 @@ However, it doesn't matter how much time there is between samples; this interval
 Also, it doesn't matter if you order the lines per frame or per agent, 
 although I expect that an ordering per agent is easiest to make (simply write the full trajectories one by one).
 
-## How to use the TrajectoryFileConverter program
+### 3. How to use the TrajectoryFileConverter program
 
 On Windows, execute the program TrajectoryFileConverter.exe via the command line.
 If you run it without arguments, a help text will appear that hopefully speaks for itself.
